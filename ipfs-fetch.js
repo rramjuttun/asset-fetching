@@ -4,7 +4,7 @@ import tar from 'tar';
 import { pipeline } from 'stream';
 import dotenv from 'dotenv';
 
-async function fetchAndExtractDirectory(cid) {
+async function fetchAndExtractDirectory(cid, targetLocation) {
     // Connect to IPFS
     dotenv.config();
     const API_KEY = process.env.IPFS_API_KEY;
@@ -35,12 +35,11 @@ async function fetchAndExtractDirectory(cid) {
         });
   
       // Extract tar
-      const extractPath = 'images';
-      fs.mkdirSync(extractPath, { recursive: true });
+      fs.mkdirSync(targetLocation, { recursive: true });
   
       await tar.extract({
         file: tarPath,
-        cwd: extractPath,
+        cwd: targetLocation,
         strip: 1    // skip top level folder
       });
 
@@ -52,10 +51,11 @@ async function fetchAndExtractDirectory(cid) {
     }
 }
 
-const foldercid_x3 = 'QmUKXQUw8jrso3CWKQ8VMihL3kV9QtwsPaYN8sXRVCGrjL';
-const foldercid_x10 = 'QmRLBcakHnbSeDAdKD7SPxdZYzUREmUTqVardevd1ekZYa'
 
-if(fs.existsSync("./images")) {
-    fs.rmSync('./images', {recursive: true})
+const foldercid = 'QmSsNT1cVFieB5sU2vZDo6MHx6TrKAFvzzEsK329me5qV3'
+const assetsFolder = "./react-flappy-bird/src/res"
+
+if(fs.existsSync(assetsFolder)) {
+    fs.rmSync(assetsFolder, {recursive: true})
 }
-fetchAndExtractDirectory(foldercid_x10);
+fetchAndExtractDirectory(foldercid, assetsFolder);

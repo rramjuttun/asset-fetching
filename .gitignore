@@ -3,6 +3,8 @@ node_modules
 # temp
 images
 temp
+react-flappy-bird/build
+react-flappy-bird/node_modules
 
 # environment
 .env
