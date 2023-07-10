@@ -1,14 +1,7 @@
 {
   "dependencies": {
-    "axios": "^1.4.0",
     "dotenv": "^16.3.1",
-    "it-map": "^3.0.3",
-    "it-pipe": "^3.0.1",
-    "it-tar": "^6.0.1",
-    "it-to-buffer": "^4.0.2",
-    "kubo-rpc-client": "^3.0.1",
-    "stream": "^0.0.2",
-    "tar": "^6.1.15",
-    "web3": "^4.0.2"
-  }
+    "web3-eth-contract": "^4.0.2"
+  },
+  "type": "module"
 }
