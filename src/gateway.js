@@ -29,8 +29,7 @@ export class Gateway {
 
     async  _fetchJsonFromIpfs(ipfsHash) {
         const url = this.urlFromCid(ipfsHash);
-        console.log(url)
-        const response = await fetch(url);
+        const response = await fetch(url.toString());
 
         if(response.headers.get('content-type') !== 'application/json') {
             console.error("CID does not resolve to json file.");
@@ -65,7 +64,7 @@ export class Gateway {
             const { baseUri, deployAddress } = entry;
             const token = await getFirstOwnedAsset(deployAddress, this.accountAddress, this.ethURI)
             
-            const jsonCID = baseUri+token;
+            const jsonCID = `${baseUri}${Number(token)}`;
             const json = await this._fetchJsonFromIpfs(jsonCID);
             const url = this.urlFromCid(json.image);
 
