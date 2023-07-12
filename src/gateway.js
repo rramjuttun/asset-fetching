@@ -80,4 +80,4 @@ export class Gateway {
 const gateway = new Gateway('http://127.0.0.1:8080')
 const hash = 'bafybeiai4sbueeddmtutqwsm2bhkm3ws4xfykeapccazpzx6tubttbdqn4/0';
 
-gateway.urlFromJsonEntry('test.json', "oimages")
+gateway.urlFromJsonEntry('test.json', "ownable")
