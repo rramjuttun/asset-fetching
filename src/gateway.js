@@ -63,7 +63,7 @@ export class Gateway {
             const { baseUri, deployAddress } = entry;
             const token = await getFirstOwnedAsset(deployAddress, this.accountAddress, this.ethURI)
             
-            const jsonCID = `${baseUri}/${token}`;
+            const jsonCID = baseUri+token;
             const json = await this._fetchJsonFromIpfs(jsonCID);
             const url = this.urlFromCid(json.image);
 
