@@ -1,5 +1,4 @@
 import { Contract } from 'web3-eth-contract';
-import dotenv from 'dotenv';
 
 // Minimal ABI for a ERC721-compliant contract. Only contains interfaces for
 // "balanceOf" and "tokenOfOwnerByIndex" functions.
