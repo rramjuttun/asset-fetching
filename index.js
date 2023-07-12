@@ -1,1 +1,1 @@
-export { Gateway } from 'src/gateway.js'
+export { Gateway } from './src/gateway.js'
