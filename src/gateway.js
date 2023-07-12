@@ -1,8 +1,7 @@
-import { getFirstOwnedAsset } from './asset-token.js';
-import fs from 'fs';
+import { getFirstOwnedAsset } from './chain-interface.js';
 
 export class Gateway {
-    constructor(gateway) {
+    constructor(gateway, ethURI="") {
         this.gateway = gateway;
         // eg. 'http://127.0.0.1:8080'
     }
@@ -38,12 +37,7 @@ export class Gateway {
         return json;
     }
 
-    async urlFromJsonEntry(filePath, key) {
-        if(!fs.existsSync(filePath)) {
-            throw new Error('json not found')
-        }
-    
-        const jsonList = JSON.parse(fs.readFileSync(filePath, 'utf8'));
+    async urlFromJsonEntry(jsonList, key) {
         const entry = jsonList[key];
     
         const type = entry.type
@@ -77,7 +71,10 @@ export class Gateway {
     }
 }
 
-const gateway = new Gateway('http://127.0.0.1:8080')
-const hash = 'bafybeiai4sbueeddmtutqwsm2bhkm3ws4xfykeapccazpzx6tubttbdqn4/0';
+// const filePath = '../test.json';
+// const jsonFile = await import(filePath, {assert: { type: 'json' }});
 
-gateway.urlFromJsonEntry('test.json', "ownable")
+// const gateway = new Gateway('http://127.0.0.1:8080')
+// const hash = 'bafybeiai4sbueeddmtutqwsm2bhkm3ws4xfykeapccazpzx6tubttbdqn4/0';
+
+// gateway.urlFromJsonEntry(jsonFile.default, "common")
