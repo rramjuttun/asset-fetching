@@ -44,19 +44,12 @@ export async function getFirstOwnedAsset(contractAddress, accountAddress, nodeUR
     const balance = await contract.methods.balanceOf(accountAddress).call()
     if(balance > 0) {
         const token = await contract.methods.tokenOfOwnerByIndex(accountAddress, 0).call();
-        console.log(token);
         return(token);
     }
     else {
         return(null);
     }
 }
-
-dotenv.config();
-const nodeURI = process.env.ETH_NODE_URI;
-const contractAddress = '0xca5d572f5a7367e58fdbff9f608813ff525707a6';
-const accountAddress = '0x061de0875047bc07960EB1F2146Bf0097d262Bb1'
-getFirstOwnedAsset(contractAddress, accountAddress, nodeURI);
 
 
 

@@ -1,9 +1,4 @@
 node_modules
 
-# temp
-images
-temp
-
 # environment
 .env
-test.json

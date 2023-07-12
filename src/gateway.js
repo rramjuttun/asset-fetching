@@ -1,9 +1,10 @@
 import { getFirstOwnedAsset } from './chain-interface.js';
 
 export class Gateway {
-    constructor(gateway, ethURI="") {
-        this.gateway = gateway;
-        // eg. 'http://127.0.0.1:8080'
+    constructor(gateway, accountAddress="", ethURI="") {
+        this.gateway = gateway; // eg. 'http://127.0.0.1:8080'
+        this.accountAddress = accountAddress;
+        this.ethURI = ethURI;
     }
 
     urlFromCid(ipfsHash) {
@@ -49,19 +50,23 @@ export class Gateway {
         if(type == 'common') {
             const hash = entry.hash;
             const url = this.urlFromCid(hash);
-            console.log(url.toString())
             return url.toString();
         } 
         else if(type == 'ownable') {
-            const accountAddress = '0x061de0875047bc07960EB1F2146Bf0097d262Bb1'
+            if(!this.accountAddress) {
+                throw new Error("No account address found.")
+            }
+            if(!this.ethURI) {
+                throw new Error("No chain URI endpoint found.")
+            }
+            
             const { baseUri, deployAddress } = entry;
-            const token = await getFirstOwnedAsset(deployAddress, accountAddress)
+            const token = await getFirstOwnedAsset(deployAddress, this.accountAddress, this.ethURI)
             
             const jsonCID = `${baseUri}/${token}`;
             const json = await this._fetchJsonFromIpfs(jsonCID);
             const url = this.urlFromCid(json.image);
 
-            console.log(url.toString())
             return(url.toString())
         } 
         else {
@@ -70,11 +75,3 @@ export class Gateway {
     
     }
 }
-
-// const filePath = '../test.json';
-// const jsonFile = await import(filePath, {assert: { type: 'json' }});
-
-// const gateway = new Gateway('http://127.0.0.1:8080')
-// const hash = 'bafybeiai4sbueeddmtutqwsm2bhkm3ws4xfykeapccazpzx6tubttbdqn4/0';
-
-// gateway.urlFromJsonEntry(jsonFile.default, "common")

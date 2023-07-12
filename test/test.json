@@ -1,0 +1,16 @@
+{
+  "common": 
+    {
+      "directory": "src/common/cimages",
+      "type": "common",
+      "hash": "bafybeidsifslqqft6lrsw5z2er5weqt5ppkeyi5yxscel6yr22iczbhtti",
+      "uri": "/ipfs/bafybeidsifslqqft6lrsw5z2er5weqt5ppkeyi5yxscel6yr22iczbhtti"
+    },
+  "ownable": 
+    {
+      "directory": "src/common/oimages",
+      "type": "ownable",
+      "baseUri": "ipfs://bafybeidvj3ijuzndwy7bm2wwy2lt7gu3bylus2f4lpx4rp7xg5hpp3xlpy",
+      "deployAddress": "0xca5d572f5a7367e58fdbff9f608813ff525707a6"
+    }
+}
