@@ -22,12 +22,14 @@ export class Gateway {
             return(null);
         }
         
-        const url = new URL(ipfsHash, this.gateway);
+        const url = new URL(this.gateway);
+        url.pathname = ipfsHash;
         return(url)
     }
 
     async  _fetchJsonFromIpfs(ipfsHash) {
         const url = this.urlFromCid(ipfsHash);
+        console.log(url)
         const response = await fetch(url);
 
         if(response.headers.get('content-type') !== 'application/json') {
