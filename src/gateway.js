@@ -73,16 +73,5 @@ export class Gateway {
         else {
             throw new Error("Invalid type: ", type)
         }
-    
-    }
-
-    async test(jsonList, key) {
-        const entry = jsonList[key];
-        if(type == 'ownable') {
-            const { baseUri, deployAddress } = entry;
-        }
-        const token = await getFirstOwnedAsset(deployAddress, this.accountAddress, this.ethURI)
-        const jsonCID = `${baseUri}${Number(token)}`;
-        return(jsonCID);
     }
 }
