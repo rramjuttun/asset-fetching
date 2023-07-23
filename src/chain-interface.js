@@ -41,9 +41,9 @@ export async function getFirstOwnedAsset(contractAddress, accountAddress, nodeUR
     contract.setProvider(nodeURI);
 
     const balance = await contract.methods.balanceOf(accountAddress).call()
-    if(balance > 0) {
+    if(Number(balance) > 0) {
         const token = await contract.methods.tokenOfOwnerByIndex(accountAddress, 0).call();
-        return(token);
+        return(Number(token));
     }
     else {
         return(null);
