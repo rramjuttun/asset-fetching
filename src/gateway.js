@@ -1,8 +1,8 @@
 import { getFirstOwnedAsset } from './chain-interface.js';
 
 export class Gateway {
-    constructor(gateway, accountAddress="", ethURI="") {
-        this.gateway = gateway; // eg. 'http://127.0.0.1:8080'
+    constructor(rootLocation, accountAddress="", ethURI="") {
+        this.rootLocation = rootLocation; // document.location
         this.accountAddress = accountAddress;
         this.ethURI = ethURI;
     }
@@ -10,32 +10,42 @@ export class Gateway {
     urlFromCid(ipfsHash) {
         //change to gateway url path
         if(ipfsHash.startsWith('ipfs://')) {
-            ipfsHash = ipfsHash.replace('ipfs://', '/ipfs/')
+            ipfsHash = ipfsHash.slice(7);
         }
-        if(!ipfsHash.startsWith('/ipfs/')) {
-            ipfsHash = '/ipfs/'+ipfsHash;
+        if(ipfsHash.startsWith('/ipfs/')) {
+            ipfsHash = ipfsHash.slice(6);
         }
 
         // length 52 for CIDv0 and 65 for CIDv1
-        if(!ipfsHash.startsWith('/ipfs/Qm') && !ipfsHash.startsWith('/ipfs/ba')) {
+        if(!ipfsHash.startsWith('Qm') && !ipfsHash.startsWith('ba')) {
             console.error('Invalid CID Provided.');
-            return(null);
+            return;
         }
         
-        const url = new URL(this.gateway);
-        url.pathname = ipfsHash;
-        return(url)
+        // If subdomain, replace hash with new one. If gateway, use relative url.
+        const host = this.rootLocation.host.split('.', 2);
+        
+        if(host.length >= 2 && host[1] === 'ipfs') {
+            const origin = this.rootLocation.origin;
+            const split = ipfsHash.split('/')
+
+            return(`${origin.replace(host[0], split[0])}/${split.slice(1).join('/')}`)
+        }
+        else {
+            return('/ipfs/'+ipfsHash)   // default to relative url
+        } 
     }
 
     async  _fetchJsonFromIpfs(ipfsHash) {
         const url = this.urlFromCid(ipfsHash);
         const response = await fetch(url.toString());
-
+        
         if(response.headers.get('content-type') !== 'application/json') {
             console.error("CID does not resolve to json file.");
             return(null);
         }
         const json = await response.json();
+        
         return json;
     }
 
@@ -48,12 +58,12 @@ export class Gateway {
             throw new Error("Invalid JSON Entry. No 'type' found.");
         }
 
-        if(type == 'common') {
+        if(type === 'common') {
             const hash = entry.hash;
             const url = this.urlFromCid(hash);
             return url.toString();
         } 
-        else if(type == 'ownable') {
+        else if(type === 'ownable') {
             if(!this.accountAddress) {
                 throw new Error("No account address found.")
             }
@@ -66,12 +76,13 @@ export class Gateway {
             
             const jsonCID = `${baseUri}${Number(token)}`;
             const json = await this._fetchJsonFromIpfs(jsonCID);
+            
             const url = this.urlFromCid(json.image);
-
             return(url.toString())
         } 
         else {
-            throw new Error("Invalid type: ", type)
+            console.log("Invalid type: ", type);
+            return;
         }
     }
 }
