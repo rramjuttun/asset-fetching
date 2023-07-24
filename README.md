@@ -77,7 +77,7 @@ import json from './assets.json'
 const gateway = new Gateway(document.location, "0x...", "https://https://polygon-mumbai.g.alchemy.com/...")
 const url = await gateway.urlFromJsonEntry(json, "src/assets/birds")
 ```
-Returns a url to the first asset owned by accountAddress in the given smart contract. The url format is the same as returned by the [`urlFromCid(cid)`](https://github.com/rramjuttun/asset-fetching/main/README.md#urlfromcidcid)method.
+Returns a url to the first asset owned by accountAddress in the given smart contract. The url format is the same as returned by the `urlFromCid(cid)` method.
 
 
 
