@@ -45,6 +45,7 @@ function testUrlFromCid() {
     const gateway1 = new Gateway(location1, accountAddress, nodeURI);
     const gateway2 = new Gateway(location2, accountAddress, nodeURI);
     const gateway3 = new Gateway(location3, accountAddress, nodeURI);
+    const gateway4 = new Gateway('http://127.0.0.1:8080', accountAddress, nodeURI);
 
     const folderHash = 'bafybeif4q3r2zz4s5kj44c3fzbseigku6rktgfulnzhqfyrqnacsb5fdru/bird1.png'
     const imageHash = 'bafkreiclqv6folmmrgyiasyd7wfftyvhmcqjxzzbyncmdtgvs7h5xrg6h4'
@@ -57,6 +58,9 @@ function testUrlFromCid() {
 
     assert(gateway3.urlFromCid(folderHash) === 'http://bafybeif4q3r2zz4s5kj44c3fzbseigku6rktgfulnzhqfyrqnacsb5fdru.ipfs.localhost:8080/bird1.png', "5");
     assert(gateway3.urlFromCid(imageHash) === 'http://bafkreiclqv6folmmrgyiasyd7wfftyvhmcqjxzzbyncmdtgvs7h5xrg6h4.ipfs.localhost:8080/', "6");
+
+    assert(gateway4.urlFromCid(folderHash) === "http://127.0.0.1:8080/ipfs/bafybeif4q3r2zz4s5kj44c3fzbseigku6rktgfulnzhqfyrqnacsb5fdru/bird1.png", "7");
+    assert(gateway4.urlFromCid(imageHash) === "http://127.0.0.1:8080/ipfs/bafkreiclqv6folmmrgyiasyd7wfftyvhmcqjxzzbyncmdtgvs7h5xrg6h4", "8");
     console.log('testUrlFromCid pass')
 }
 
@@ -64,7 +68,9 @@ async function testGetFromJson() {
     const filePath = './test.json';
     const jsonFile = await import(filePath, {assert: { type: 'json' }});
     const gateway = new Gateway(location2, accountAddress, nodeURI);
-    assert(await gateway.urlFromJsonEntry(jsonFile.default, "ownable") === 'https://bafybeif4q3r2zz4s5kj44c3fzbseigku6rktgfulnzhqfyrqnacsb5fdru.ipfs.4everland.io/bird1.png');
+    const url = await gateway.urlFromJsonEntry(jsonFile.default, "ownable");
+    
+    assert(url === 'https://bafybeif4q3r2zz4s5kj44c3fzbseigku6rktgfulnzhqfyrqnacsb5fdru.ipfs.4everland.io/bird1.png');
     console.log('testGetFromJson pass')
 }
 
