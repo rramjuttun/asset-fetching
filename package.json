@@ -2,7 +2,7 @@
   "name": "ipfs-gateway-fetch",
   "version": "1.0.0",
   "dependencies": {
-    "web3-eth-contract": "^4.0.2"
+    "web3-eth-contract": "4.0.3"
   },
   "type": "module",
   "devDependencies": {
