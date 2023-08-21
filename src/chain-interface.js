@@ -42,7 +42,7 @@ export async function getFirstOwnedAsset(contractAddress, accountAddress, nodeUR
 
     // Get how many nfts the the account owns
     const balance = await contract.methods.balanceOf(accountAddress).call();
-    if(balance == 0) {
+    if(Number(balance) == 0) {
       return(null);
     }
 
