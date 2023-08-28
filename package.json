@@ -1,5 +1,10 @@
 {
   "name": "ipfs-gateway-fetch",
+  "homepage": "https://github.com/rramjuttun/asset-fetching#readme",
+  "repository": {
+		"type": "git",
+		"url": "git+https://github.com/rramjuttun/asset-fetching.git"
+	},
   "version": "1.0.1",
   "dependencies": {
     "web3-eth-contract": "^4.0.5"
