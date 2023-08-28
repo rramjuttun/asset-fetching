@@ -11,7 +11,7 @@ This library provides a service worker for a website deployed on IPFS to fetch o
 ### Install and import 
 Install the package using 
 ```bash
-npm install https://github.com/rramjuttun/assets-to-nfts
+npm install ipfs-gateway-fetch
 ```
 
 Import the package into your project using 
